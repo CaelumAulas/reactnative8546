@@ -13,6 +13,12 @@
 - Atualizar onde a pessoa ta
 - Codepush
 
+## Processos
+
+- Fluxos pra trampar com versionamento: https://www.udemy.com/git-e-github-na-vida-real/
+- Processos de automatização baseado em push no github: https://circleci.com/
+- Automatizar deploy para a loja: https://fastlane.tools/
+
 ## Qualidade de código
 
 - Robert C Martin - Clean Architecture and Design: https://www.youtube.com/watch?v=Nsjsiz2A9mg
