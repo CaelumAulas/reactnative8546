@@ -1,19 +1,34 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+// Components | State
+import React, { Component } from "react";
+// import { Component } from "react"; === const Component = React.Component
+import { Dimensions, Text, View, ScrollView, Image } from "react-native";
+import CardPost from "./src/components/CardPost";
+export default class App extends Component {
+  // JSX === HTML
+  render() {
+    // import { Dimensions, Text, View, Image } from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+    const posts = [
+      {
+        id: 1,
+        imagem: "http://placehold.it/1000x1000",
+        descricao: "Fotinha tirada na praia",
+        usuario: "omariosouto"
+      },
+      {
+        id: 2,
+        imagem: "http://placehold.it/1000x1000",
+        descricao: "Fotinha tirada na praia",
+        usuario: "artdiniz"
+      }
+    ];
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "red",
-    alignItems: "center",
-    justifyContent: "center"
+    return (
+      <ScrollView style={{ marginTop: 30 }}>
+        {posts.map(function(item) {
+          return <CardPost key={item.id} post={item} />;
+        })}
+      </ScrollView>
+    );
   }
-});
+}
