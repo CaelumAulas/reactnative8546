@@ -39,7 +39,11 @@
   - https://github.com/airbnb/react-sketchapp
 
 - Dados:
+
   - https://www.youtube.com/watch?v=y5Hv7pMA1uo
+
+- You dont know JS
+  - https://github.com/getify/You-Dont-Know-JS
 
 ## Padronização de estilos visuais
 
@@ -83,3 +87,12 @@
 - Planeja bem o que vc precisa
   - Monta uns protótipos
     - https://www.figma.com/
+
+## Flutter
+
+- https://www.evernote.com/l/AX2AH-xbYxJMKY-mctiX9vvfdrWc2ngGrIU
+
+## Dev em geral
+
+- https://www.youtube.com/watch?v=QmX2NPkJTKg
+- https://www.youtube.com/watch?v=umWABit-wbk&t=308s
