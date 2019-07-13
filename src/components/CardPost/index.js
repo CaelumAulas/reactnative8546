@@ -1,32 +1,33 @@
 import React, { Component } from "react";
 import { View, Image, Text, Dimensions } from "react-native";
+import { CardPostHeader } from "./CardPostHeader";
+import { CardPostFooter } from "./CardPostFooter";
+import PropTypes from "prop-types";
 
 export default class CardPost extends Component {
   render() {
     const screenWidth = Dimensions.get("screen").width;
-    const item = this.props.post;
+    const post = this.props.post;
     return (
       <View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            padding: 15
-          }}
-        >
-          <Image
-            style={{ width: 50, height: 50, borderRadius: 50 }}
-            source={{ uri: item.imagem }}
-          />
-          <Text style={{ paddingLeft: 15 }}>{`@${item.usuario}`}</Text>
-        </View>
+        <CardPostHeader imagem={post.urlPerfil} usuario={post.loginUsuario} />
         <Image
           style={{ width: screenWidth, height: screenWidth }}
-          source={{ uri: item.imagem }}
+          source={{ uri: post.urlFoto }}
         />
-        <Text style={{ padding: 15 }}>Fotinha tirada na praia</Text>
+        <CardPostFooter />
       </View>
     );
   }
 }
+
+CardPost.propTypes = {
+  post: PropTypes.shape({
+    urlPerfil: PropTypes.string,
+    loginUsuario: PropTypes.string,
+    urlFoto: PropTypes.string
+  }).isRequired
+};
+
+// 20 minutos, para criar o CardPostHeader o e CardPostFooter
+// export const NomeDoComponent = function() { return (...) }
