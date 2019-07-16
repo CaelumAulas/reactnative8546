@@ -3,8 +3,10 @@ import { View, Text, Button } from "react-native";
 import {
   createBottomTabNavigator,
   createStackNavigator,
-  createAppContainer
+  createAppContainer,
+  createSwitchNavigator
 } from "react-navigation";
+import { AreaDeslogado } from "./src/modules/AreaDeslogado";
 
 class FeedScreen extends Component {
   static navigationOptions = {
@@ -66,8 +68,35 @@ const AreaLogado = createBottomTabNavigator({
   Perfil: {
     screen: PerfilStack
   }
+  // logout
 });
 
-const SistemaDeNavegacaoDaNossaApzinhaShow = AreaLogado;
+class AuthScreen extends React.Component {
+  state = { ready: false };
+  componentDidMount() {
+    setTimeout(() => {
+      // Roda qualquer coisa async aqui
+      const hasUserToken = false;
+      this.setState({ ready: true }, () => {
+        this.props.navigation.navigate(hasUserToken ? "Logado" : "Deslogado");
+      });
+    }, 500);
+  }
+  render() {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Carregando...</Text>
+      </View>
+    );
+  }
+}
+const SistemaDeNavegacaoDaNossaApzinhaShow = createSwitchNavigator(
+  {
+    Auth: AuthScreen,
+    Deslogado: AreaDeslogado,
+    Logado: AreaLogado
+  },
+  { initialRouteName: "Auth" }
+);
 
 export default createAppContainer(SistemaDeNavegacaoDaNossaApzinhaShow);
