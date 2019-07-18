@@ -9,78 +9,85 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
+  AsyncStorage
 } from "react-native";
+import InstaelumService from "../../services/InstaelumService";
+import { FormBuilder } from "../../components/FormBuilder";
 
 // Usem com cautela: https://pt-br.reactjs.org/docs/hooks-intro.html
 export class LoginScreen extends React.Component {
   state = {
-    login: "",
-    senha: "",
+    login: "rafael",
+    senha: "123456",
     fields: []
   };
 
-  componentDidMount() {
-    const fields = [
-      {
-        id: 1,
-        slug: "login",
-        title: "Usuário",
-        type: "text",
-        syncValidators: []
-      },
-      {
-        id: 2,
-        slug: "senha",
-        title: "Senha",
-        type: "password",
-        syncValidators: []
-      }
-    ];
-
-    setTimeout(() => {
-      this.setState({ fields });
-    }, 2000);
-  }
-
-  // http://dontpad.com/bagulhos
   handleChange = nomeDoCampo => {
     return valorDoCampo => {
       this.setState({ [nomeDoCampo]: valorDoCampo });
     };
   };
 
+  // Chamada de API
+  // Acesso ao async storage
+  // Token
+  //
   handleUserLogin = () => {
-    console.warn(this.state);
+    InstaelumService.login({ senha: this.state.senha, login: this.state.login })
+      .then(() => {
+        alert("Deu certo");
+      })
+      .catch(err => {
+        alert("Aconteceu algum bug");
+      });
   };
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Text style={styles.title}>Instaelum</Text>
-        {this.state.fields.length === 0 ? <ActivityIndicator /> : null}
-        {this.state.fields.map(field => {
-          return (
-            <TextInput
-              key={field.id}
-              onChangeText={this.handleChange(field.slug)}
-              style={styles.formTextField}
-              placeholder={field.title}
-              secureTextEntry={field.type === "password" ? true : false}
-            />
-          );
-        })}
-
-        {/* <TextInput
-          style={styles.formTextField}
-          onChangeText={this.handleChange("senha")}
-          placeholder="Senha"
-          secureTextEntry={true}
-        /> */}
-        <TouchableOpacity onPress={this.handleUserLogin} style={styles.btn}>
-          <Text style={styles.textColor}>Logar</Text>
-        </TouchableOpacity>
+        <FormBuilder
+          fields={[
+            {
+              id: 1,
+              name: "login",
+              label: "Login",
+              type: "text",
+              value: "omariosouto",
+              syncValidators: [
+                ["required", {}, "Esse campo é obrigatório"],
+                ["minlength", { min: 3 }, "Preencha ao menos 3 caracteres"]
+              ]
+            },
+            {
+              id: 2,
+              name: "idade",
+              label: "Idade",
+              type: "number",
+              value: "21",
+              syncValidators: [["required", {}, "Esse campo é obrigatório"]]
+            }
+          ]}
+        />
       </KeyboardAvoidingView>
+      // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+      //   <Text style={styles.title}>Instaelum</Text>
+      //   {this.state.fields.length === 0 ? <ActivityIndicator /> : null}
+      //   {this.state.fields.map(field => {
+      //     return (
+      //       <TextInput
+      //         key={field.id}
+      //         onChangeText={this.handleChange(field.slug)}
+      //         style={styles.formTextField}
+      //         placeholder={field.title}
+      //         secureTextEntry={field.type === "password" ? true : false}
+      //       />
+      //     );
+      //   })}
+      //   <TouchableOpacity onPress={this.handleUserLogin} style={styles.btn}>
+      //     <Text style={styles.textColor}>Logar</Text>
+      //   </TouchableOpacity>
+      // </KeyboardAvoidingView>
     );
   }
 }

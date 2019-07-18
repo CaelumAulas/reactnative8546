@@ -65,6 +65,7 @@
 
 ## Qualidade de código
 
+- Livro de Solid para Ninjas do Aniche: https://www.casadocodigo.com.br/products/livro-oo-solid?_pos=1&_sid=ae7a42136&_ss=r
 - Robert C Martin - Clean Architecture and Design: https://www.youtube.com/watch?v=Nsjsiz2A9mg
 - Front-End-Reactive-Architectures-JavaScript: https://www.amazon.com/Front-End-Reactive-Architectures-JavaScript-Frameworks/dp/1484231791
 - Como achar o rawType no JavaScript:
@@ -96,3 +97,14 @@
 
 - https://www.youtube.com/watch?v=QmX2NPkJTKg
 - https://www.youtube.com/watch?v=umWABit-wbk&t=308s
+
+## Como o react funciona por debaixo dos panos:
+
+- https://reactjs.org/docs/reconciliation.html
+- https://dev.to/ycmjason/building-a-simple-virtual-dom-from-scratch-3d05
+
+## Como lidar com icones?
+
+- https://icomoon.io/
+- https://docs.expo.io/versions/latest/guides/using-custom-fonts/
+- https://medium.com/@kswanie21/custom-fonts-in-react-native-tutorial-for-ios-android-76ceeaa0eb78
