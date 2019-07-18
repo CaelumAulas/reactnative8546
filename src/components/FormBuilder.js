@@ -31,37 +31,57 @@ export class FormBuilder extends Component {
   handleChange = fieldName => {
     return novoValor => {
       // console.warn("Valor que foi digitado: ", novoValor);
-      const fieldsAtualizados = this.state.fields.map(field => {
-        if (field.name === fieldName) return { ...field, value: novoValor };
-        return field;
-      });
-
       const currentField = this.state.fields.find(field => {
         return field.name === fieldName;
       });
-      const errors = [];
-      currentField.syncValidators.forEach(syncValidator => {
-        const validatorType = syncValidator[0]; // required, minlength
-        const validatorData = syncValidator[1];
-        const validatorMessage = syncValidator[2];
-        const isInvalidResult = validations[validatorType](
-          novoValor,
-          validatorData
-        );
-        if (isInvalidResult)
-          errors.push({ type: validatorType, message: validatorMessage });
-      });
 
-      this.setState(prevState => ({
-        fields: fieldsAtualizados,
-        errors: { ...prevState.errors, [fieldName]: errors }
-      }));
+      this.validateField(currentField, novoValor);
     };
   };
-  // onChangeText={onChangeText}
+
+  getAllValues = () => {
+    // [Array de algo] .map [Array de outra coisa] (com mesmo numero itens)
+    // [Array de algo] .reduce Qualquer dado
+    return this.state.fields.reduce((dadoFinal, item) => {
+      dadoFinal[item.name] = item.value;
+      return dadoFinal;
+    }, {}); // { login: omariosouto }
+  };
+
+  validateField = (currentField, novoValor) => {
+    const fieldName = currentField.name;
+    const errors = [];
+    currentField.syncValidators.forEach(syncValidator => {
+      const validatorType = syncValidator[0]; // required, minlength
+      const validatorData = syncValidator[1];
+      const validatorMessage = syncValidator[2];
+      const isInvalidResult = validations[validatorType](
+        novoValor,
+        validatorData
+      );
+      if (isInvalidResult)
+        errors.push({ type: validatorType, message: validatorMessage });
+    });
+
+    this.setState(
+      prevState => ({
+        fields: prevState.fields.map(field => {
+          if (field.name === fieldName) return { ...field, value: novoValor };
+          return field;
+        }),
+        errors: { ...prevState.errors, [fieldName]: errors }
+      }),
+      () => {
+        // console.log("Callback, pós atualizar o state");
+      }
+    );
+  };
 
   handleFormBuilderSubmit = () => {
-    console.warn("Devemos pegar os dados de TODOS os campos");
+    this.state.fields.forEach(field => {
+      this.validateField(field, field.value);
+    });
+    console.warn("Values", this.getAllValues());
   };
 
   render() {

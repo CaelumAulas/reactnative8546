@@ -108,3 +108,13 @@
 - https://icomoon.io/
 - https://docs.expo.io/versions/latest/guides/using-custom-fonts/
 - https://medium.com/@kswanie21/custom-fonts-in-react-native-tutorial-for-ios-android-76ceeaa0eb78
+
+## Programação funcional:
+
+- https://www.youtube.com/watch?v=e-5obm1G_FY
+
+## Praticar mais
+
+- https://javascript30.com/
+- https://www.hackerrank.com/
+  - https://cursos.alura.com.br/alura-mais (Guilherme Silveira)

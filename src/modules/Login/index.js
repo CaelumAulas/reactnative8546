@@ -53,7 +53,18 @@ export class LoginScreen extends React.Component {
               name: "login",
               label: "Login",
               type: "text",
-              value: "omariosouto",
+              value: "",
+              syncValidators: [
+                ["required", {}, "Esse campo é obrigatório"],
+                ["minlength", { min: 3 }, "Preencha ao menos 3 caracteres"]
+              ]
+            },
+            {
+              id: 3,
+              name: "nome",
+              label: "Nome",
+              type: "text",
+              value: "",
               syncValidators: [
                 ["required", {}, "Esse campo é obrigatório"],
                 ["minlength", { min: 3 }, "Preencha ao menos 3 caracteres"]
@@ -64,7 +75,7 @@ export class LoginScreen extends React.Component {
               name: "idade",
               label: "Idade",
               type: "number",
-              value: "21",
+              value: "",
               syncValidators: [["required", {}, "Esse campo é obrigatório"]]
             }
           ]}
