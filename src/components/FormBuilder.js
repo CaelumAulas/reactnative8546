@@ -63,25 +63,44 @@ export class FormBuilder extends Component {
         errors.push({ type: validatorType, message: validatorMessage });
     });
 
-    this.setState(
-      prevState => ({
-        fields: prevState.fields.map(field => {
-          if (field.name === fieldName) return { ...field, value: novoValor };
-          return field;
+    return new Promise(resolve => {
+      this.setState(
+        prevState => ({
+          fields: prevState.fields.map(field => {
+            if (field.name === fieldName) return { ...field, value: novoValor };
+            return field;
+          }),
+          errors: { ...prevState.errors, [fieldName]: errors }
         }),
-        errors: { ...prevState.errors, [fieldName]: errors }
-      }),
-      () => {
-        // console.log("Callback, pós atualizar o state");
-      }
-    );
+        () => {
+          resolve(true);
+        }
+      );
+    });
   };
 
   handleFormBuilderSubmit = () => {
-    this.state.fields.forEach(field => {
-      this.validateField(field, field.value);
+    const validationsPromises = this.state.fields.map(field => {
+      return this.validateField(field, field.value);
     });
-    console.warn("Values", this.getAllValues());
+
+    Promise.all(validationsPromises).then(() => {
+      const errors = this.state.errors;
+      const isAllFieldsValid = (isValid = Object.keys(errors).reduce(
+        (isValid, errorKey) => {
+          console.log(errorKey, errors[errorKey]);
+          if (errors[errorKey].length > 0) return false;
+          return isValid;
+        },
+        true
+      ));
+
+      if (isAllFieldsValid) {
+        console.warn("Values", this.getAllValues());
+      } else {
+        console.warn("Você fez merda, errou!", errors);
+      }
+    });
   };
 
   render() {
@@ -98,7 +117,11 @@ export class FormBuilder extends Component {
               />
               <Text>{JSON.stringify(fieldErrors)}</Text>
               {fieldErrors.map(erroDoField => {
-                return <Text key={field.id * 10}>- {erroDoField.message}</Text>;
+                return (
+                  // Para gerar ID dinamicamente no meio do código:
+                  // - https://www.npmjs.com/package/uuid
+                  <Text key={erroDoField.message}>- {erroDoField.message}</Text>
+                );
               })}
             </View>
           );
