@@ -78,7 +78,7 @@ export class FormBuilder extends Component {
               />
               <Text>{JSON.stringify(fieldErrors)}</Text>
               {fieldErrors.map(erroDoField => {
-                return <Text key={field.id}>- {erroDoField.message}</Text>;
+                return <Text key={field.id * 10}>- {erroDoField.message}</Text>;
               })}
             </View>
           );
