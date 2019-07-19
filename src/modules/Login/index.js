@@ -33,8 +33,8 @@ export class LoginScreen extends React.Component {
   // Acesso ao async storage
   // Token
   //
-  handleUserLogin = () => {
-    InstaelumService.login({ senha: this.state.senha, login: this.state.login })
+  handleUserLogin = values => {
+    InstaelumService.login({ senha: values.senha, login: values.login })
       .then(() => {
         alert("Deu certo");
       })
@@ -47,24 +47,16 @@ export class LoginScreen extends React.Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <FormBuilder
+          onSuccess={values => {
+            this.handleUserLogin(values);
+          }}
           fields={[
             {
               id: 1,
               name: "login",
               label: "Login",
               type: "text",
-              value: "",
-              syncValidators: [
-                ["required", {}, "Esse campo é obrigatório"],
-                ["minlength", { min: 3 }, "Preencha ao menos 3 caracteres"]
-              ]
-            },
-            {
-              id: 3,
-              name: "nome",
-              label: "Nome",
-              type: "text",
-              value: "",
+              value: "rafael",
               syncValidators: [
                 ["required", {}, "Esse campo é obrigatório"],
                 ["minlength", { min: 3 }, "Preencha ao menos 3 caracteres"]
@@ -72,13 +64,16 @@ export class LoginScreen extends React.Component {
             },
             {
               id: 2,
-              name: "idade",
-              label: "Idade",
-              type: "number",
-              value: "",
+              name: "senha",
+              label: "Senha",
+              type: "text",
+              value: "123456",
               syncValidators: [["required", {}, "Esse campo é obrigatório"]]
             }
           ]}
+          url="https://minhaapi.com.br/api"
+          endpoint="/public/login"
+          method="POST"
         />
       </KeyboardAvoidingView>
       // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>

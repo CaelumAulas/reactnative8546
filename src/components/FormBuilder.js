@@ -96,9 +96,10 @@ export class FormBuilder extends Component {
       ));
 
       if (isAllFieldsValid) {
-        console.warn("Values", this.getAllValues());
+        console.warn("onSuccess");
+        this.props.onSuccess && this.props.onSuccess(this.getAllValues());
       } else {
-        console.warn("Você fez merda, errou!", errors);
+        console.warn("onError", errors);
       }
     });
   };
